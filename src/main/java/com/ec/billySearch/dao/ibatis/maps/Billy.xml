@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Billy">
+	<resultMap id="billyEveryDayGame" class="com.ec.billySearch.domain.BillyEveryDay">
+		<result property="gameName" column="gameid" columnIndex="2" />
+		<result property="today" column="aday" columnIndex="1" />
+		<result property="money" column="adaymoney" columnIndex="3" />
+	</resultMap>
+
+	<resultMap id="billyEveryDayQuDao" class="com.ec.billySearch.domain.BillyEveryDay_QuDao">
+		<result property="quDaoName" column="qudaoid" columnIndex="2" />
+		<result property="today" column="aday" columnIndex="1" />
+		<result property="money" column="adaymoney" columnIndex="3" />
+	</resultMap>
+
+	<select id="getEveryDayBillyPerGame" parameterClass="java.util.HashMap"
+		resultMap="billyEveryDayGame">
+		SELECT TRUNC(T.COMPLETE_DATE, 'dd') as aday,
+		(CASE
+		T.ACCESS_TYPE_ID || T.GAME_ID
+		WHEN '020001' THEN
+		'一球成名'
+		WHEN '020002'
+		THEN
+		'隋唐名将'
+		WHEN '020003' THEN
+		'魔道六宗'
+		WHEN '020004' THEN
+		'三国杀'
+		WHEN '020005'
+		THEN
+		'梦回神国'
+		WHEN '020006' THEN
+		'梦幻飞仙'
+		WHEN '020007' THEN
+		'将军'
+		WHEN '020008'
+		THEN
+		'热血篮球'
+		WHEN '020009' THEN
+		'热血海贼王'
+		WHEN '020010' THEN
+		'三国风云2'
+		WHEN
+		'020011' THEN
+		'欧冠足球'
+		END) as gameid,
+		SUM(T.ECMONEY / 100) as adaymoney
+		FROM BILLY_ORDER_HISTORY T, BILLY_ORDER_STATE_HISTORY T1
+		WHERE
+		T.ORDER_TYPE = 'pay'
+		AND T.ID = T1.ORDER_ID
+		AND T1.STATE = 'new'
+		AND
+		T.COMPLETE_DATE &gt;
+		TO_DATE(#fromDate#, 'yyyy-mm-dd hh24:mi:ss')
+		AND
+		T.COMPLETE_DATE &lt;
+		TO_DATE(#toDate#, 'yyyy-mm-dd hh24:mi:ss')
+		AND
+		T.ACCESS_TYPE_ID || T.GAME_ID IN
+		('020001',
+		'020002',
+		'020003',
+		'020004',
+		'020005',
+		'020006',
+		'020007',
+		'020008',
+		'020009',
+		'020010',
+		'020011')
+		GROUP
+		BY TRUNC(T.COMPLETE_DATE, 'dd'),
+		(CASE T.ACCESS_TYPE_ID || T.GAME_ID
+		WHEN '020001' THEN
+		'一球成名'
+		WHEN '020002' THEN
+		'隋唐名将'
+		WHEN '020003' THEN
+		'魔道六宗'
+		WHEN '020004' THEN
+		'三国杀'
+		WHEN '020005' THEN
+		'梦回神国'
+		WHEN '020006'
+		THEN
+		'梦幻飞仙'
+		WHEN '020007' THEN
+		'将军'
+		WHEN '020008' THEN
+		'热血篮球'
+		WHEN '020009'
+		THEN
+		'热血海贼王'
+		WHEN '020010' THEN
+		'三国风云2'
+		WHEN '020011' THEN
+		'欧冠足球'
+		END)
+		ORDER
+		BY 2,1
+	</select>
+
+	<select id="getEveryDayBillyPerQuDao" parameterClass="java.util.HashMap"
+		resultMap="billyEveryDayQuDao">
+		SELECT TRUNC(T.COMPLETE_DATE, 'dd') as aday,
+		(CASE PAYMENT_MODE_ID
+		WHEN 'YB' THEN '易宝'
+		WHEN 'AL' THEN '阿里'
+		WHEN 'YBDX' THEN '易宝电信'
+		WHEN 'JW' THEN '骏网'
+		WHEN 'YBLT' THEN '易宝联通'
+		WHEN 'YBSZX' THEN '易宝神州行'
+		END) as qudaoid
+		, SUM(T.ECMONEY / 100) as adaymoney
+		FROM
+		BILLY_ORDER_HISTORY T, BILLY_ORDER_STATE_HISTORY T1
+		WHERE T.ORDER_TYPE
+		= 'buy'
+		AND T.ID = T1.ORDER_ID
+		AND T1.STATE = 'finished'
+		AND
+		T.COMPLETE_DATE &gt;
+		TO_DATE(#fromDate#, 'yyyy-mm-dd hh24:mi:ss')
+		AND
+		T.COMPLETE_DATE &lt;
+		TO_DATE(#toDate#, 'yyyy-mm-dd hh24:mi:ss')
+		AND
+		PAYMENT_MODE_ID IN ('YBSZX', 'YBLT', 'YBDX', 'AL', 'YB', 'JW')
+		GROUP BY
+		TRUNC(T.COMPLETE_DATE, 'dd'),
+		(CASE PAYMENT_MODE_ID
+		WHEN 'YB' THEN '易宝'
+		WHEN 'AL' THEN '阿里'
+		WHEN 'YBDX' THEN '易宝电信'
+		WHEN 'JW' THEN '骏网'
+		WHEN 'YBLT' THEN '易宝联通'
+		WHEN 'YBSZX' THEN '易宝神州行'
+		END)
+		ORDER BY 2,1
+	</select>
+
+
+</sqlMap>

@@ -33,4 +33,10 @@ public class Tool {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		return df.format(day);
 	}
+	
+	
+	public static void createAExcelForGameAndQuDao(){
+		
+	}
+	
 }

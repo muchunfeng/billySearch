@@ -37,6 +37,10 @@
 				alert("年份输入错误");
 				return false;
 			}
+			//月份可以输入为空 
+			if(month == null || month==""){
+				return true;
+			}
 			if (result2 == null || month > 12 || month < 1) {
 				alert("月份输入错误");
 				return false;

@@ -20,31 +20,31 @@
 		(CASE
 		T.ACCESS_TYPE_ID || T.GAME_ID
 		WHEN '020001' THEN
-		'一球成名'
+		'****'
 		WHEN '020002'
 		THEN
-		'隋唐名将'
+		'****'
 		WHEN '020003' THEN
-		'魔道六宗'
+		'****'
 		WHEN '020004' THEN
-		'三国杀'
+		'****'
 		WHEN '020005'
 		THEN
-		'梦回神国'
+		'****'
 		WHEN '020006' THEN
-		'梦幻飞仙'
+		'****'
 		WHEN '020007' THEN
-		'将军'
+		'****'
 		WHEN '020008'
 		THEN
-		'热血篮球'
+		'****'
 		WHEN '020009' THEN
-		'热血海贼王'
+		'****'
 		WHEN '020010' THEN
-		'三国风云2'
+		'****'
 		WHEN
 		'020011' THEN
-		'欧冠足球'
+		'****'
 		END) as gameid,
 		SUM(T.ECMONEY / 100) as adaymoney
 		FROM BILLY_ORDER_HISTORY T, BILLY_ORDER_STATE_HISTORY T1
@@ -75,29 +75,29 @@
 		BY TRUNC(T.COMPLETE_DATE, 'dd'),
 		(CASE T.ACCESS_TYPE_ID || T.GAME_ID
 		WHEN '020001' THEN
-		'一球成名'
+		'****'
 		WHEN '020002' THEN
-		'隋唐名将'
+		'****'
 		WHEN '020003' THEN
-		'魔道六宗'
+		'****'
 		WHEN '020004' THEN
-		'三国杀'
+		'****'
 		WHEN '020005' THEN
-		'梦回神国'
+		'****'
 		WHEN '020006'
 		THEN
-		'梦幻飞仙'
+		'****'
 		WHEN '020007' THEN
-		'将军'
+		'****'
 		WHEN '020008' THEN
-		'热血篮球'
+		'****'
 		WHEN '020009'
 		THEN
-		'热血海贼王'
+		'****'
 		WHEN '020010' THEN
-		'三国风云2'
+		'****'
 		WHEN '020011' THEN
-		'欧冠足球'
+		'****'
 		END)
 		ORDER
 		BY 2,1
@@ -107,12 +107,12 @@
 		resultMap="billyEveryDayQuDao">
 		SELECT TRUNC(T.COMPLETE_DATE, 'dd') as aday,
 		(CASE PAYMENT_MODE_ID
-		WHEN 'YB' THEN '易宝'
-		WHEN 'AL' THEN '阿里'
-		WHEN 'YBDX' THEN '易宝电信'
-		WHEN 'JW' THEN '骏网'
-		WHEN 'YBLT' THEN '易宝联通'
-		WHEN 'YBSZX' THEN '易宝神州行'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
 		END) as qudaoid
 		, SUM(T.ECMONEY / 100) as adaymoney
 		FROM
@@ -132,12 +132,12 @@
 		GROUP BY
 		TRUNC(T.COMPLETE_DATE, 'dd'),
 		(CASE PAYMENT_MODE_ID
-		WHEN 'YB' THEN '易宝'
-		WHEN 'AL' THEN '阿里'
-		WHEN 'YBDX' THEN '易宝电信'
-		WHEN 'JW' THEN '骏网'
-		WHEN 'YBLT' THEN '易宝联通'
-		WHEN 'YBSZX' THEN '易宝神州行'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
+		WHEN '****' THEN '****'
 		END)
 		ORDER BY 2,1
 	</select>
